@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef  FACTORY_INTERFACE_HPP_
-#define  FACTORY_INTERFACE_HPP_
+#ifndef  ROS_IGN_BRIDGE__FACTORY_INTERFACE_HPP_
+#define  ROS_IGN_BRIDGE__FACTORY_INTERFACE_HPP_
 
-// include ROS 2
-#include <rclcpp/rclcpp.hpp>
+#include <string>
+
+// include ROS
+#include <ros/node_handle.h>
+#include <ros/publisher.h>
 
 // include Ignition Transport
 #include <ignition/transport/Node.hh>
-
-#include <memory>
-#include <string>
 
 namespace ros_ign_bridge
 {
@@ -31,9 +31,9 @@ class FactoryInterface
 {
 public:
   virtual
-  rclcpp::PublisherBase::SharedPtr
+  ros::Publisher
   create_ros_publisher(
-    rclcpp::Node::SharedPtr ros_node,
+    ros::NodeHandle node,
     const std::string & topic_name,
     size_t queue_size) = 0;
 
@@ -45,9 +45,9 @@ public:
     size_t queue_size) = 0;
 
   virtual
-  rclcpp::SubscriptionBase::SharedPtr
+  ros::Subscriber
   create_ros_subscriber(
-    rclcpp::Node::SharedPtr ros_node,
+    ros::NodeHandle node,
     const std::string & topic_name,
     size_t queue_size,
     ignition::transport::Node::Publisher & ign_pub) = 0;
@@ -58,9 +58,9 @@ public:
     std::shared_ptr<ignition::transport::Node> node,
     const std::string & topic_name,
     size_t queue_size,
-    rclcpp::PublisherBase::SharedPtr ros_pub) = 0;
+    ros::Publisher ros_pub) = 0;
 };
 
 }  // namespace ros_ign_bridge
 
-#endif  // FACTORY_INTERFACE_HPP_
+#endif  // ROS_IGN_BRIDGE__FACTORY_INTERFACE_HPP_

@@ -12,13 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <rclcpp/rclcpp.hpp>
+#include <iostream>
+#include <memory>
+#include <string>
+
+// include ROS
+#ifdef __clang__
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wunused-parameter"
+#endif
+#include <ros/ros.h>
+#ifdef __clang__
+# pragma clang diagnostic pop
+#endif
 
 // include Ignition Transport
 #include <ignition/transport/Node.hh>
-
-#include <memory>
-#include <string>
 
 #include "bridge.hpp"
 
@@ -26,24 +35,26 @@
 int main(int argc, char * argv[])
 {
   // ROS node
-  rclcpp::init(argc, argv);
-  auto ros_node = std::make_shared<rclcpp::Node>("test_node");
+  ros::init(argc, argv, "ros_ign_bridge");
+  ros::NodeHandle ros_node;
 
   // Ignition node
   auto ign_node = std::make_shared<ignition::transport::Node>();
 
   // bridge one example topic
   std::string topic_name = "chatter";
-  std::string ros_type_name = "std_msgs/msg/String";
+  std::string ros_type_name = "std_msgs/String";
   std::string ign_type_name = "ignition.msgs.StringMsg";
   size_t queue_size = 10;
 
   auto handles = ros_ign_bridge::create_bidirectional_bridge(
     ros_node, ign_node, ros_type_name, ign_type_name, topic_name, queue_size);
 
-  rclcpp::spin(ros_node);
+  // ROS asynchronous spinner
+  ros::AsyncSpinner async_spinner(1);
+  async_spinner.start();
 
-  // Wait for ign node shutdown
+  // Zzzzzz.
   ignition::transport::waitForShutdown();
 
   return 0;

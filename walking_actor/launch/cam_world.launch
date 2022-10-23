@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find ros_ign_gazebo)/launch/ign_gazebo.launch">
+    <arg name="ign_args" value="-r $(find walking_actor)/cam_world.sdf"/>
+  </include>
+
+  <node
+    pkg="ros_ign_bridge"
+    type="parameter_bridge"
+    name="$(anon ros_ign_bridge)"
+    output="screen"
+    args="/camera@sensor_msgs/Image@ignition.msgs.Image /camera_info@sensor_msgs/CameraInfo@ignition.msgs.CameraInfo">
+  </node>
+
+</launch>

@@ -1,19 +1,19 @@
-// Copyright 2018 Open Source Robotics Foundation, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-#include <ignition/msgs.hh>
-#include <ignition/transport.hh>
+/*
+ * Copyright (C) 2018 Open Source Robotics Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+*/
 
 #include <atomic>
 #include <chrono>
@@ -21,8 +21,9 @@
 #include <iostream>
 #include <string>
 #include <thread>
-
-#include "../test_utils.hpp"
+#include <ignition/msgs.hh>
+#include <ignition/transport.hh>
+#include "../test_utils.h"
 
 /// \brief Flag used to break the publisher loop and terminate the program.
 static std::atomic<bool> g_terminatePub(false);
@@ -33,16 +34,15 @@ static std::atomic<bool> g_terminatePub(false);
 /// and exit the program smoothly.
 void signal_handler(int _signal)
 {
-  if (_signal == SIGINT || _signal == SIGTERM) {
+  if (_signal == SIGINT || _signal == SIGTERM)
     g_terminatePub = true;
-  }
 }
 
 //////////////////////////////////////////////////
 int main(int /*argc*/, char **/*argv*/)
 {
   // Install a signal handler for SIGINT and SIGTERM.
-  std::signal(SIGINT, signal_handler);
+  std::signal(SIGINT,  signal_handler);
   std::signal(SIGTERM, signal_handler);
 
   // Create a transport node and advertise a topic.
@@ -53,9 +53,19 @@ int main(int /*argc*/, char **/*argv*/)
   ignition::msgs::Boolean bool_msg;
   ros_ign_bridge::testing::createTestMsg(bool_msg);
 
+  // ignition::msgs::Color.
+  auto color_pub = node.Advertise<ignition::msgs::Color>("color");
+  ignition::msgs::Color color_msg;
+  ros_ign_bridge::testing::createTestMsg(color_msg);
+
   // ignition::msgs::Empty.
   auto empty_pub = node.Advertise<ignition::msgs::Empty>("empty");
   ignition::msgs::Empty empty_msg;
+
+  // ignition::msgs::Int32.
+  auto int32_pub = node.Advertise<ignition::msgs::Int32>("int32");
+  ignition::msgs::Int32 int32_msg;
+  ros_ign_bridge::testing::createTestMsg(int32_msg);
 
   // ignition::msgs::Float.
   auto float_pub = node.Advertise<ignition::msgs::Float>("float");
@@ -108,21 +118,26 @@ int main(int /*argc*/, char **/*argv*/)
   ignition::msgs::Pose pose_stamped_msg;
   ros_ign_bridge::testing::createTestMsg(pose_stamped_msg);
 
+  // ignition::msgs::Pose_V.
+  auto pose_v_pub = node.Advertise<ignition::msgs::Pose_V>("pose_array");
+  ignition::msgs::Pose_V pose_v_msg;
+  ros_ign_bridge::testing::createTestMsg(pose_v_msg);
+
   // ignition::msgs::Transform.
   auto transform_pub =
-    node.Advertise<ignition::msgs::Pose>("transform");
+      node.Advertise<ignition::msgs::Pose>("transform");
   ignition::msgs::Pose transform_msg;
   ros_ign_bridge::testing::createTestMsg(transform_msg);
 
   // ignition::msgs::TransformStamped.
   auto transform_stamped_pub =
-    node.Advertise<ignition::msgs::Pose>("transform_stamped");
+      node.Advertise<ignition::msgs::Pose>("transform_stamped");
   ignition::msgs::Pose transform_stamped_msg;
   ros_ign_bridge::testing::createTestMsg(transform_stamped_msg);
 
   // ignition::msgs::Pose_V.
   auto tf2_message_pub =
-    node.Advertise<ignition::msgs::Pose_V>("tf2_message");
+      node.Advertise<ignition::msgs::Pose_V>("tf2_message");
   ignition::msgs::Pose_V tf2_msg;
   ros_ign_bridge::testing::createTestMsg(tf2_msg);
 
@@ -156,10 +171,20 @@ int main(int /*argc*/, char **/*argv*/)
   ignition::msgs::Magnetometer magnetometer_msg;
   ros_ign_bridge::testing::createTestMsg(magnetometer_msg);
 
+  // ignition::msgs::NavSat.
+  auto navsat_pub = node.Advertise<ignition::msgs::NavSat>("navsat");
+  ignition::msgs::NavSat navsat_msg;
+  ros_ign_bridge::testing::createTestMsg(navsat_msg);
+
   // ignition::msgs::Actuators.
   auto actuators_pub = node.Advertise<ignition::msgs::Actuators>("actuators");
   ignition::msgs::Actuators actuators_msg;
   ros_ign_bridge::testing::createTestMsg(actuators_msg);
+
+  // ignition::msgs::OccupancyGrid
+  auto map_pub = node.Advertise<ignition::msgs::OccupancyGrid>("map");
+  ignition::msgs::OccupancyGrid map_msg;
+  ros_ign_bridge::testing::createTestMsg(map_msg);
 
   // ignition::msgs::Odometry.
   auto odometry_pub = node.Advertise<ignition::msgs::Odometry>("odometry");
@@ -178,7 +203,7 @@ int main(int /*argc*/, char **/*argv*/)
 
   // ignition::msgs::PointCloudPacked.
   auto pointcloudpacked_pub = node.Advertise<ignition::msgs::PointCloudPacked>(
-    "pointcloud2");
+      "pointcloud2");
   ignition::msgs::PointCloudPacked pointcloudpacked_msg;
   ros_ign_bridge::testing::createTestMsg(pointcloudpacked_msg);
 
@@ -187,15 +212,21 @@ int main(int /*argc*/, char **/*argv*/)
   ignition::msgs::BatteryState battery_state_msg;
   ros_ign_bridge::testing::createTestMsg(battery_state_msg);
 
-  // ignition::msgs::JointTrajectory.
-  auto joint_trajectory_pub = node.Advertise<ignition::msgs::JointTrajectory>("joint_trajectory");
-  ignition::msgs::JointTrajectory joint_trajectory_msg;
-  ros_ign_bridge::testing::createTestMsg(joint_trajectory_msg);
+  auto marker_pub = node.Advertise<ignition::msgs::Marker>("marker");
+  ignition::msgs::Marker marker_msg;
+  ros_ign_bridge::testing::createTestMsg(marker_msg);
+
+  auto marker_array_pub = node.Advertise<ignition::msgs::Marker_V>("marker_array");
+  ignition::msgs::Marker_V marker_array_msg;
+  ros_ign_bridge::testing::createTestMsg(marker_array_msg);
 
   // Publish messages at 1Hz.
-  while (!g_terminatePub) {
+  while (!g_terminatePub)
+  {
     bool_pub.Publish(bool_msg);
+    color_pub.Publish(color_msg);
     empty_pub.Publish(empty_msg);
+    int32_pub.Publish(int32_msg);
     float_pub.Publish(float_msg);
     double_pub.Publish(double_msg);
     header_pub.Publish(header_msg);
@@ -205,6 +236,7 @@ int main(int /*argc*/, char **/*argv*/)
     clock_pub.Publish(clock_msg);
     point_pub.Publish(point_msg);
     pose_pub.Publish(pose_msg);
+    pose_v_pub.Publish(pose_v_msg);
     pose_stamped_pub.Publish(pose_stamped_msg);
     transform_pub.Publish(transform_msg);
     transform_stamped_pub.Publish(transform_stamped_msg);
@@ -215,13 +247,16 @@ int main(int /*argc*/, char **/*argv*/)
     imu_pub.Publish(imu_msg);
     laserscan_pub.Publish(laserscan_msg);
     magnetic_pub.Publish(magnetometer_msg);
+    navsat_pub.Publish(navsat_msg);
     actuators_pub.Publish(actuators_msg);
+    map_pub.Publish(map_msg);
     odometry_pub.Publish(odometry_msg);
     joint_states_pub.Publish(joint_states_msg);
     twist_pub.Publish(twist_msg);
     pointcloudpacked_pub.Publish(pointcloudpacked_msg);
     battery_state_pub.Publish(battery_state_msg);
-    joint_trajectory_pub.Publish(joint_trajectory_msg);
+    marker_pub.Publish(marker_msg);
+    marker_array_pub.Publish(marker_array_msg);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }

@@ -2,21 +2,40 @@
 Changelog for package ros_ign
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.221.2 (2021-07-20)
+0.111.2 (2021-12-30)
 --------------------
 
-0.221.1 (2020-08-19)
+0.111.1 (2021-07-20)
+--------------------
+* Contributors: Jose Luis Rivero, Nate Koenig
+
+0.111.0 (2020-07-23)
 --------------------
 
-0.221.0 (2020-07-23)
---------------------
-* Added ros_ign_gazebo to ros_ign package.xml (`#81 <https://github.com/osrf/ros_ign/issues/81>`_)
-* Update Dashing docs (`#62 <https://github.com/osrf/ros_ign/issues/62>`_)
-* Port ign_ros_gazebo_demos to ROS2 (`#58 <https://github.com/osrf/ros_ign/issues/58>`_)
-* Enable ROS2 CI for Dashing branch (`#43 <https://github.com/osrf/ros_ign/issues/43>`_)
+0.9.2 (2020-05-14)
+------------------
+
+0.9.1 (2020-05-13)
+------------------
+
+0.9.0 (2020-05-13)
+------------------
+* Update Melodic docs (`#61 <https://github.com/ignitionrobotics/ros_ign/issues/61>`_)
+* [Citadel] Citadel support (`#48 <https://github.com/ignitionrobotics/ros_ign/issues/48>`_)
+  * Citadel support
+  * more citadel deps
+  * addressing feedback, fix typos and better find logic
+  * fix CI
+* Contributors: chapulina
+
+0.8.0 (2019-11-22)
+------------------
+* Add replaces for each package (`#46 <https://github.com/osrf/ros_ign/issues/46>`_)
 * Rename packages and fix compilation + tests
+  Signed-off-by: Louise Poubel <louise@openrobotics.org>
 * Move files ros1 -> ros
-* Contributors: Alejandro Hernández Cordero, Jose Luis Rivero, Louise Poubel, chapulina
+  Signed-off-by: Louise Poubel <louise@openrobotics.org>
+* Contributors: Louise Poubel, chapulina
 
 0.7.0 (2019-08-15)
 ------------------

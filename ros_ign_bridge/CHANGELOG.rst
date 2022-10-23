@@ -2,53 +2,81 @@
 Changelog for package ros_ign_bridge
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.221.2 (2021-07-20)
+0.111.2 (2021-12-30)
 --------------------
-* Ignore local publications for ROS 2 subscriber (`#146 <https://github.com/osrf/ros_ign/issues/146>`_)
-  - Note: Does not work with all rmw implementations (e.g.: FastRTPS)
-* [ros2] Update documentation for installation instructions and bridge examples (`#142 <https://github.com/osrf/ros_ign/issues/142>`_)
-* [foxy] Edifice support (`#140 <https://github.com/osrf/ros_ign/issues/140>`_)
-* [ros2] Add JointTrajectory message conversion (`#121 <https://github.com/osrf/ros_ign/issues/121>`_)
-  Conversion between
-  - ignition::msgs::JointTrajectory
-  - trajectory_msgs::msg::JointTrajectory
-* Add TFMessage / Pose_V and Float64 / Double conversions (`#117 <https://github.com/osrf/ros_ign/issues/117>`_)
-  Addresses issue `#116 <https://github.com/osrf/ros_ign/issues/116>`_
-* updated prereq & branch name (`#113 <https://github.com/osrf/ros_ign/issues/113>`_)
-* [ros2] Update releases (`#108 <https://github.com/osrf/ros_ign/issues/108>`_)
-* Updated README.md (`#104 <https://github.com/osrf/ros_ign/issues/104>`_)
-* Add support for Dome (`#103 <https://github.com/osrf/ros_ign/issues/103>`_)
-* Contributors: Alejandro Hernández Cordero, Andrej Orsula, Florent Audonnet, Jenn, Louise Poubel, Luca Della Vedova
+* [noetic] 🏁 Dome EOL (`#197 <https://github.com/osrf/ros_ign/issues/197>`_)
+* Don't double-build convert.cpp (`#184 <https://github.com/osrf/ros_ign/issues/184>`_)
+* 🥳 [Noetic] Tweaks to bridge tutorial (`#180 <https://github.com/osrf/ros_ign/issues/180>`_)
+* Contributors: Louise Poubel, Michael Carroll
 
-0.221.1 (2020-08-19)
+0.111.1 (2021-07-20)
 --------------------
-* Add pkg-config as a buildtool dependency (`#102 <https://github.com/osrf/ros_ign/issues/102>`_)
-* Port ros_ign_bridge tests to ROS 2 (`#98 <https://github.com/osrf/ros_ign/issues/98>`_)
-* Rename test_utils.hpp (`#98 <https://github.com/osrf/ros_ign/issues/98>`_)
-* Contributors: Louise Poubel, ahcorde
+* Check imu orientation field (`#168 <https://github.com/osrf/ros_ign/issues/168>`_)
+* [noetic] Update version docs, add Fortress (`#166 <https://github.com/osrf/ros_ign/issues/166>`_)
+* Fix catkin_testing warning (`#163 <https://github.com/osrf/ros_ign/issues/163>`_)
+* Add support for nav_msgs/OccupancyGrid (`#137 <https://github.com/osrf/ros_ign/issues/137>`_)
+* [noetic] Edifice support (`#139 <https://github.com/osrf/ros_ign/issues/139>`_)
+* Bridge int32 messages (`#138 <https://github.com/osrf/ros_ign/issues/138>`_)
+* Add visualization_msgs/Marker (`#136 <https://github.com/osrf/ros_ign/issues/136>`_)
+  * Add support for std_msgs/ColorRGBA
+  * Add support for visualization_msgs/Marker
+* Add support for Pose_V to PoseArray (`#134 <https://github.com/osrf/ros_ign/issues/134>`_)
+* Prevent segfault caused by missing values in sensor_msgs::JointState (`#135 <https://github.com/osrf/ros_ign/issues/135>`_)
+* Add dome + melodic to CI (`#126 <https://github.com/osrf/ros_ign/issues/126>`_)
+* [noetic] Update releases (`#106 <https://github.com/osrf/ros_ign/issues/106>`_)
+* Contributors: Alejandro Hernández Cordero, Ian Chen, Jose Luis Rivero, Louise Poubel, Martin Pecka, Michael Carroll, Nate Koenig, Tobias Fischer
 
-0.221.0 (2020-07-23)
+0.111.0 (2020-07-23)
 --------------------
-* Install only what's necessary, rename builtin_interfaces (`#95 <https://github.com/osrf/ros_ign/issues/95>`_)
-* Move headers to src, rename builtin_interfaces (`#95 <https://github.com/osrf/ros_ign/issues/95>`_)
-* Integer support (`#91 <https://github.com/osrf/ros_ign/issues/91>`_)
-  Adds Int32 to the bridge.
-* [ros2] Fixed CI - Added Foxy (`#89 <https://github.com/osrf/ros_ign/issues/89>`_)
-  Co-authored-by: Louise Poubel <louise@openrobotics.org>
-* Ignore ros-args in parameter bridge (`#65 <https://github.com/osrf/ros_ign/issues/65>`_)
-* Update Dashing docs (`#62 <https://github.com/osrf/ros_ign/issues/62>`_)
-* Update dependencies to Citadel (`#57 <https://github.com/osrf/ros_ign/issues/57>`_)
-* [WIP] Port ign_ros_gazebo_demos to ROS2 (`#58 <https://github.com/osrf/ros_ign/issues/58>`_)
-  Port ros_ign_image to ROS2
-  Port ros_ign_gazebo_demos to ROS2
-* Add support for std_msgs/Empty (`#53 <https://github.com/osrf/ros_ign/issues/53>`_)
-* Add support for std_msgs/Bool (`#50 <https://github.com/osrf/ros_ign/issues/50>`_)
-* [ros2] Port ros_ign_bridge to ROS2 (`#45 <https://github.com/osrf/ros_ign/issues/45>`_)
-* Enable ROS2 CI for Dashing branch (`#43 <https://github.com/osrf/ros_ign/issues/43>`_)
+* Noetic support (`#93 <https://github.com/osrf/ros_ign/issues/93>`_)
+  Co-authored-by: Jose Luis Rivero <jrivero@osrfoundation.org>
+* Install only what's necessary, rename builtin_interfaces (`#96 <https://github.com/osrf/ros_ign/issues/96>`_)
+* Move headers to src, rename builtin_interfaces (`#96 <https://github.com/osrf/ros_ign/issues/96>`_)
+* Choose collection based on environment variable (`#72 <https://github.com/osrf/ros_ign/issues/72>`_)
+  * Choose collection based on the environment variable IGNITION_VERSION
+* Contributors: Louise Poubel
+
+0.9.2 (2020-05-14)
+------------------
+
+0.9.1 (2020-05-13)
+------------------
+
+0.9.0 (2020-05-13)
+------------------
+* Add ignition::msgs::Pose_V to tf2_msgs::TFMessage conversion (`#67 <https://github.com/ignitionrobotics/ros_ign/issues/67>`_)
+  * add ign pose_v to ros tf2_message bridge
+  * add tf2 msgs dependency
+* Add Float64 to ignition Double conversions.  This is needed for suppo… (`#64 <https://github.com/ignitionrobotics/ros_ign/issues/64>`_)
+  * Add Float64 to ignition Double conversions.  This is needed for supporting joint controller (such as for a pan/tilt gimbal)
+  * Update README to reflect that bridge now supports double message conversions.
+* Update Melodic docs (`#61 <https://github.com/ignitionrobotics/ros_ign/issues/61>`_)
+* Patches for Citadel release (`#56 <https://github.com/ignitionrobotics/ros_ign/issues/56>`_)
+  * Patches for Citadel release
+  * Mention Citadel or Blueprint deps
+* Merge pull request `#55 <https://github.com/ignitionrobotics/ros_ign/issues/55>`_ from osrf/fix_repo_url
+  Update repo URL in README install isntructions
+* Update repo URL in README install isntructions
+* [Citadel] Citadel support (`#48 <https://github.com/ignitionrobotics/ros_ign/issues/48>`_)
+  * Citadel support
+  * more citadel deps
+  * addressing feedback, fix typos and better find logic
+  * fix CI
+* Contributors: Jose Luis Rivero, chapulina, iche033, realdealneil
+
+0.8.0 (2019-11-22)
+------------------
+* Add support for std_msgs/Empty (`#52 <https://github.com/osrf/ros_ign/issues/52>`_)
+* Add support for std_msgs/Bool (`#49 <https://github.com/osrf/ros_ign/issues/49>`_)
+  Signed-off-by: Michael Carroll <michael@openrobotics.org>
+* Add replaces for each package (`#46 <https://github.com/osrf/ros_ign/issues/46>`_)
 * Make all API and comments ROS-version agnostic
+  Signed-off-by: Louise Poubel <louise@openrobotics.org>
 * Rename packages and fix compilation + tests
+  Signed-off-by: Louise Poubel <louise@openrobotics.org>
 * Move files ros1 -> ros
-* Contributors: Addisu Taddese, Alejandro Hernández Cordero, Jose Luis Rivero, Louise Poubel, Luca Della Vedova, Michael Carroll, Mohamed Ahmed, Shivesh Khaitan, chapulina
+  Signed-off-by: Louise Poubel <louise@openrobotics.org>
+* Contributors: Addisu Taddese, Louise Poubel, Michael Carroll, chapulina
 
 0.7.0 (2019-08-15)
 ------------------

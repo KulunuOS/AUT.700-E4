@@ -7,21 +7,30 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
+  add_compile_options(-Wall -Wextra)
 endif()
 
-find_package(ament_cmake REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(nav_msgs REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(rosgraph_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(tf2_msgs REQUIRED)
-find_package(trajectory_msgs REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+               geometry_msgs
+               rosconsole
+               roscpp
+               rostest
+               sensor_msgs
+               std_msgs
+               tf2_msgs
+               visualization_msgs)
 
+# Fortress
+if ("$ENV{IGNITION_VERSION}" STREQUAL "fortress")
+  find_package(ignition-transport11 REQUIRED)
+  set(IGN_TRANSPORT_VER ${ignition-transport11_VERSION_MAJOR})
+
+  find_package(ignition-msgs8 REQUIRED)
+  set(IGN_MSGS_VER ${ignition-msgs8_VERSION_MAJOR})
+
+  message(STATUS "Compiling against Ignition Fortress")
 # Edifice
-if("$ENV{IGNITION_VERSION}" STREQUAL "edifice")
+elseif ("$ENV{IGNITION_VERSION}" STREQUAL "edifice")
   find_package(ignition-transport10 REQUIRED)
   set(IGN_TRANSPORT_VER ${ignition-transport10_VERSION_MAJOR})
 
@@ -38,18 +47,16 @@ else()
   set(IGN_MSGS_VER ${ignition-msgs5_VERSION_MAJOR})
 
   message(STATUS "Compiling against Ignition Citadel")
+  add_definitions(-DIGNITION_CITADEL)
 endif()
 
-include_directories(include)
+catkin_package()
+
+include_directories(include ${catkin_INCLUDE_DIRS})
 
 set(common_sources
   src/convert.cpp
   src/factories.cpp
-)
-
-set(bridge_executables
-  parameter_bridge
-  static_bridge
 )
 
 set(bridge_lib
@@ -59,141 +66,74 @@ set(bridge_lib
 add_library(${bridge_lib}
   ${common_sources}
 )
-
 target_link_libraries(${bridge_lib}
+  ${catkin_LIBRARIES}
   ignition-msgs${IGN_MSGS_VER}::core
   ignition-transport${IGN_TRANSPORT_VER}::core
 )
-ament_target_dependencies(${bridge_lib}
-  "geometry_msgs"
-  "nav_msgs"
-  "rclcpp"
-  "rosgraph_msgs"
-  "sensor_msgs"
-  "std_msgs"
-  "tf2_msgs"
-  "trajectory_msgs"
+
+set(bridge_executables
+  parameter_bridge
+  static_bridge
 )
-
-install(TARGETS ${bridge_lib}
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin)
-
-install(
-  DIRECTORY include/
-  DESTINATION include
-)
-
-ament_export_include_directories(include)
-ament_export_libraries(${bridge_lib})
 
 foreach(bridge ${bridge_executables})
   add_executable(${bridge}
     src/${bridge}.cpp
-    ${common_sources}
   )
   target_link_libraries(${bridge}
-    ignition-msgs${IGN_MSGS_VER}::core
-    ignition-transport${IGN_TRANSPORT_VER}::core
-  )
-  ament_target_dependencies(${bridge}
-    "geometry_msgs"
-    "nav_msgs"
-    "rclcpp"
-    "rosgraph_msgs"
-    "sensor_msgs"
-    "std_msgs"
-    "tf2_msgs"
-    "trajectory_msgs"
+    ${bridge_lib}
   )
   install(TARGETS ${bridge}
-    DESTINATION lib/${PROJECT_NAME}
+          DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   )
-endforeach()
+endforeach(bridge)
 
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  ament_lint_auto_find_test_dependencies()
+catkin_package(INCLUDE_DIRS include
+               LIBRARIES ${bridge_lib})
 
-  find_package(ament_cmake_gtest REQUIRED)
-  find_package(launch_testing_ament_cmake REQUIRED)
-  ament_find_gtest()
+install(TARGETS ${bridge_lib}
+        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
 
-  add_executable(test_ros_publisher test/publishers/ros_publisher.cpp)
-  ament_target_dependencies(test_ros_publisher
-    geometry_msgs
-    nav_msgs
-    rclcpp
-    rosgraph_msgs
-    sensor_msgs
-    std_msgs
-    tf2_msgs
-    trajectory_msgs
-  )
-  target_link_libraries(test_ros_publisher
-    ${GTEST_LIBRARIES}
-    ignition-msgs${IGN_MSGS_VER}::core
-    ignition-transport${IGN_TRANSPORT_VER}::core
-  )
-  target_include_directories(test_ros_publisher PUBLIC ${GTEST_INCLUDE_DIRS})
+install(DIRECTORY include/${PROJECT_NAME}/
+        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 
-  add_executable(test_ros_subscriber test/subscribers/ign_subscriber.cpp)
-  ament_target_dependencies(test_ros_subscriber
-    geometry_msgs
-    nav_msgs
-    rclcpp
-    rosgraph_msgs
-    sensor_msgs
-    std_msgs
-    tf2_msgs
-    trajectory_msgs
+if(CATKIN_ENABLE_TESTING)
+  # Tests
+  find_package(rostest REQUIRED)
+  set(test_publishers
+    ign_publisher
+    ros_publisher
   )
 
-  target_link_libraries(test_ros_subscriber
-    ${GTEST_LIBRARIES}
-    ignition-msgs${IGN_MSGS_VER}::core
-    ignition-transport${IGN_TRANSPORT_VER}::core
-  )
-  target_include_directories(test_ros_subscriber PUBLIC ${GTEST_INCLUDE_DIRS})
-
-  add_executable(test_ign_publisher test/publishers/ign_publisher.cpp)
-  ament_target_dependencies(test_ign_publisher
-    rclcpp
-  )
-  target_link_libraries(test_ign_publisher
-    ${GTEST_LIBRARIES}
-    ignition-msgs${IGN_MSGS_VER}::core
-    ignition-transport${IGN_TRANSPORT_VER}::core
-  )
-  target_include_directories(test_ign_publisher PUBLIC ${GTEST_INCLUDE_DIRS})
-
-  add_executable(test_ign_subscriber test/subscribers/ign_subscriber.cpp)
-  ament_target_dependencies(test_ign_subscriber
-    rclcpp
-  )
-  target_link_libraries(test_ign_subscriber
-    ${GTEST_LIBRARIES}
-    ignition-msgs${IGN_MSGS_VER}::core
-    ignition-transport${IGN_TRANSPORT_VER}::core
-  )
-  target_include_directories(test_ign_subscriber PUBLIC ${GTEST_INCLUDE_DIRS})
-
-  install(TARGETS
-    test_ros_publisher
-    test_ros_subscriber
-    test_ign_publisher
-    test_ign_subscriber
-    DESTINATION lib/${PROJECT_NAME}
+  set(test_subscribers
+    ign_subscriber
+    ros_subscriber
   )
 
-  add_launch_test(test/launch/test_ros_subscriber.launch.py
-    TIMEOUT 200
-  )
+  foreach(test_publisher ${test_publishers})
+    add_executable(${test_publisher}
+      test/publishers/${test_publisher}.cpp
+    )
+    target_link_libraries(${test_publisher}
+      ${catkin_LIBRARIES}
+      ignition-msgs${IGN_MSGS_VER}::core
+      ignition-transport${IGN_TRANSPORT_VER}::core
+      gtest
+      gtest_main
+    )
+  endforeach(test_publisher)
 
-  add_launch_test(test/launch/test_ign_subscriber.launch.py
-    TIMEOUT 200
-  )
+  foreach(test_subscriber ${test_subscribers})
+    add_rostest_gtest(test_${test_subscriber}
+      test/${test_subscriber}.test
+      test/subscribers/${test_subscriber}.cpp)
+    target_link_libraries(test_${test_subscriber}
+      ${catkin_LIBRARIES}
+      ignition-msgs${IGN_MSGS_VER}::core
+      ignition-transport${IGN_TRANSPORT_VER}::core
+    )
+  endforeach(test_subscriber)
 endif()
-
-ament_package()

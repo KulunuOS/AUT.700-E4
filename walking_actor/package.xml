@@ -6,7 +6,7 @@
   <maintainer email="alejandro@openrobotics.org">Alejandro Hernandez Cordero</maintainer>
   <author email="louise@openrobotics.org">Louise Poubel</author>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>catkin</buildtool_depend>
 
   <!-- Edifice -->
   <exec_depend condition="$IGNITION_VERSION == edifice">ignition-gazebo5</exec_depend>
@@ -23,10 +23,7 @@
   <exec_depend>rqt_image_view</exec_depend>
   <exec_depend>rqt_plot</exec_depend>
   <exec_depend>rqt_topic</exec_depend>
-  <exec_depend>rviz2</exec_depend>
+  <exec_depend>rviz</exec_depend>
   <exec_depend>xacro</exec_depend>
 
-  <export>
-    <build_type>ament_cmake</build_type>
-  </export>
 </package>

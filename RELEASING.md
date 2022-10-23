@@ -56,6 +56,7 @@ versions:
     * Citadel: 1
     * Dome: 2
     * Edifice: 3
+    * Fortress: 4
 
 ROS | Ignition | Version
 -- | -- | --
@@ -94,7 +95,7 @@ Foxy | Edifice | 0.223.X
 
 1. Bloom it into a custom repository
     ```
-    BLOOM_RELEASE_REPO_BASE=https://github.com/osrf/ bloom-release --no-pull-request --rosdistro melodic --track melodic ros_ign
+    BLOOM_RELEASE_REPO_BASE=https://github.com/osrf/ bloom-release --no-pull-request --rosdistro noetic --track noetic ros_ign
     ```
 
     Will fail fedora: ignore and continue:
@@ -108,4 +109,3 @@ Foxy | Edifice | 0.223.X
     cd release-tools/bloom
     ./ros_ign_bridge-release.py.bash 0.8.0 https://github.com/osrf/ros_ign-release <ros_distro> <token> --ignition-version <version_name>
     ```
-

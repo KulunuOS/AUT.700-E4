@@ -2,18 +2,20 @@ cmake_minimum_required(VERSION 3.5)
 
 project(walking_actor)
 
-find_package(ament_cmake REQUIRED)
+find_package(catkin REQUIRED)
+
+catkin_package()
 
 install(
   DIRECTORY
     launch/
-  DESTINATION share/${PROJECT_NAME}/launch
+  DESTINATION
+    ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
 
 install(
   DIRECTORY
     rviz/
-  DESTINATION share/${PROJECT_NAME}/rviz
+  DESTINATION
+    ${CATKIN_PACKAGE_SHARE_DESTINATION}/rviz
 )
-
-ament_package()

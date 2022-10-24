@@ -14,7 +14,7 @@ To build the package open a fresh terminal and run the commands below
 ```
 $ mkdir -p ~/ws/src
 $ cd ~/ws/src
-$ git clone https://github.com/KulunuOS/AUT.700-E4.git .
+$ git clone https://github.com/KulunuOS/AUT.700-E4.git . -b foxy
 $ cd ~/ws
 $ source /opt/ros/foxy/setup.bash
 $ colcon build

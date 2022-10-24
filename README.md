@@ -12,7 +12,7 @@ This package is tested on the following configurations
 To build the package open a fresh terminal and run the commands below
 
 ```
-$ mkdr -p ~/ws/src
+$ mkdir -p ~/ws/src
 $ cd ~/ws/src
 $ git clone https://github.com/KulunuOS/AUT.700-E4.git .
 $ cd ~/ws

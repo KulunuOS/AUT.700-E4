@@ -1,13 +1,13 @@
-name: tracker
+name: tracker_ros2
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.6.13=h12debd9_1
-  - imutils=0.5.4=py36h5fab9bb_0
-  - numpy=1.19.5=py36hfc0c790_2
+  - python=3.8.8
+  - imutils
+  - numpy
   - opencv-python-4.1.2.30
-  - ros-cv-bridge=1.13.0=py36hefa0500_2
-  - ipykernel=5.5.5=py36hcb3619a_0
+  - ros-cv-bridge
+  - ipykernel
   
 prefix: /Users/username/anaconda3/envs/tracker

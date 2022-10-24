@@ -34,7 +34,7 @@ def generate_launch_description():
     ign_gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_ign_gazebo, 'launch', 'ign_gazebo.launch.py')),
-        launch_arguments={'ign_args': '-r ~/ws/src/ros_ign/walking_actor/cam_world.sdf'}.items(),
+        launch_arguments={'ign_args': '-r ~/ws/src/walking_actor/cam_world.sdf'}.items(),
     )
 
     # RViz

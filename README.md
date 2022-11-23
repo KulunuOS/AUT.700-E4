@@ -26,7 +26,7 @@ $ catkin build
 Run the commands below to launch the simulation 
 
 ```
-$ cd ~/ws/src
+$ cd ~/ws
 $ source devel/setup.bash
 $ roslaunch walking_actor cam_world.launch
 ```

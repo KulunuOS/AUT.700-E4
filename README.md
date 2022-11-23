@@ -28,7 +28,7 @@ $ colcon build
 Run the commands below to launch the simulation 
 
 ```
-$ cd ~/ws/src
+$ cd ~/ws
 $ source install/setup.bash
 $ ros2 launch walking_actor cam_world.launch.py
 ```

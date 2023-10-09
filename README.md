@@ -8,7 +8,7 @@ This repository contains work that was build upon the original [ros_gz](https://
 
 This package is tested on the following configurations
 - Python 3.8.8
-- ROS2 Humble
+- ROS2 Foxy 
 
 ### Installation 
 

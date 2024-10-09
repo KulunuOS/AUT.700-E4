@@ -36,7 +36,7 @@ $ cd ~/ws
 $ source install/setup.bash
 $ ros2 launch walking_actor cam_world.launch.py
 ```
-At this point if you have done everything correctly the ros package should launch and display as below. Press **cntrl + c** ti kill the simulation. 
+At this point if you have done everything correctly the ros package should launch and display as below. Press **cntrl + c** to kill the simulation. 
 
 ![](assets/actor.gif)
 

@@ -8,7 +8,8 @@ This repository contains work that was build upon the original [ros_gz](https://
 This package is tested on the following configurations
 - Ubuntu 22.04
 - Python 3.10
-- ROS2 Humble 
+- ROS2 Humble
+- Gazebo Fortress 
 
 ---
 ### TASK 1: Build the ROS2 Package

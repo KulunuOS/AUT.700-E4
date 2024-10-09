@@ -1,4 +1,4 @@
-# AUT.700 2023
+# TG.ROBO-400 Mechatronics and Programming - 2024
 This repository contains work that was build upon the original [ros_gz](https://github.com/gazebosim/ros_gz/tree/humble) repository by Open robotics.
 
 ![](assets/actor.gif)
